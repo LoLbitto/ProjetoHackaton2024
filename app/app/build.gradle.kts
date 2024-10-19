@@ -20,8 +20,18 @@ android {
         }
     }
 
+    signingConfigs {
+	create("release") {
+	    storeFile = file("${project.property("MyProject.signing")}.keystore")
+	    keyAlias = "hortibairro"
+	    keyPassword = "sslpkhackathon"
+	    storePassword = "sslpkhackathon"
+	}
+    }
+
     buildTypes {
-        release {
+        getByName("release") {
+	    signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -33,6 +43,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -66,4 +77,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(platform("androidx.compose:compose-bom:2023.10.00"))
+
+    implementation("androidx.compose.material:material:1.3.0")
+    implementation("androidx.compose.ui:ui:1.3.0")
 }
