@@ -6,3 +6,7 @@
 body {
   background-image: url('/background.png');
 }
+
+.mt-auto-minus-10vh {
+  margin-top: calc(auto - 10vh);
+}
