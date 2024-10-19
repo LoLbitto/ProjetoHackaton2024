@@ -25,20 +25,17 @@ public class ControllerPrincipal {
 
     @GetMapping("/")
     public String testeApi() {
-        return "fdkfsd";
+        return "API funcionando";
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/cadastro")
-    public @ResponseBody
-    String addNewUser(@RequestBody Pessoa pessoa) {
-
+    public ResponseEntity<Pessoa> addNewUser(@RequestBody Pessoa pessoa) {
         pessoaR.save(pessoa);
-
-        return "Salvo";
+        return ResponseEntity.ok(pessoa);
     }
 
-    /**@PostMapping(path = "/path")
+    @PostMapping(path = "/path")
     public @ResponseBody
     Iterable<Pessoa> getAllUsers() {
         return pessoaR.findAll();
@@ -54,10 +51,9 @@ public class ControllerPrincipal {
     Pessoa replaceEmployee(@RequestBody Pessoa novaPessoa, @PathVariable Long cpf) {
 
         return pessoaR.findById(cpf).map(pessoa -> {
-            pessoa.setNome(novaPessoa.getNome());
+            pessoa.setNomePessoa(novaPessoa.getNomePessoa());
             pessoa.setCpf(novaPessoa.getCpf());
-            pessoa.setRg(novaPessoa.getRg());
-            pessoa.setDataNascimento(novaPessoa.getDataNascimento());
+            pessoa.setDataNascimentoPessoa(novaPessoa.getDataNascimentoPessoa());
             pessoa.setRendaFamiliarBruta(novaPessoa.getRendaFamiliarBruta());
             pessoa.setQtdDependentes(novaPessoa.getQtdDependentes());
 
@@ -72,4 +68,4 @@ public class ControllerPrincipal {
         pessoaR.deleteById(cpf);
     }
 
-}**/    
+}

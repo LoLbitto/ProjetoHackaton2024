@@ -12,25 +12,26 @@ import jakarta.persistence.Id;
 @Entity(name = "tbPessoa")
 public class Pessoa {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @Column(name = "nomePessoa")
-    private String nome_Pessoa;
+    @Column(name = "nome_Pessoa")
+    private String nomePessoa;
 
-    @Column(name = "datanascimentoPessoa")
-    private LocalDate dataNascimento_Pessoa;
+    @Column(name = "dataNascimento_Pessoa")
+    private LocalDate dataNascimentoPessoa;
 
-    @Column(name = "cpfPessoa")
+    @Column(name = "cpf_Pessoa")
     private long cpf;
 
-    @Column(name = "rendafamiliarbrutaPessoa")
+    @Column(name = "rendaFamiliarBruta_Pessoa")
     private BigDecimal rendaFamiliarBruta;
 
-    @Column(name = "qtddependentesPessoa")
+    @Column(name = "qtdDependentes_Pessoa")
     private int qtdDependentes;
 
+    // Getters e Setters
     public long getCpf() {
         return cpf;
     }
@@ -55,20 +56,20 @@ public class Pessoa {
         this.qtdDependentes = qtdDependentes;
     }
 
-    public LocalDate getDataNascimento_Pessoa() {
-        return dataNascimento_Pessoa;
+    public LocalDate getDataNascimentoPessoa() {
+        return dataNascimentoPessoa;
     }
 
-    public void setDataNascimento_Pessoa(LocalDate dataNascimento_Pessoa) {
-        this.dataNascimento_Pessoa = dataNascimento_Pessoa;
+    public void setDataNascimentoPessoa(LocalDate dataNascimentoPessoa) {
+        this.dataNascimentoPessoa = dataNascimentoPessoa;
     }
 
-    public String getNome_Pessoa() {
-        return nome_Pessoa;
+    public String getNomePessoa() {
+        return nomePessoa;
     }
 
-    public void setNome_Pessoa(String nome_Pessoa) {
-        this.nome_Pessoa = nome_Pessoa;
+    public void setNomePessoa(String nomePessoa) {
+        this.nomePessoa = nomePessoa;
     }
 
     public int getId() {
@@ -78,5 +79,4 @@ public class Pessoa {
     public void setId(int id) {
         this.id = id;
     }
-
 }
