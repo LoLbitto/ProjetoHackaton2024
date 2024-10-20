@@ -3,18 +3,14 @@ package hackaton.hackaton.pessoa;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.sun.source.tree.LabeledStatementTree;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity(name = "tbPessoa")
 public class Pessoa {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
     @Column(name = "nome_Pessoa")
     private String nomePessoa;
@@ -22,8 +18,9 @@ public class Pessoa {
     @Column(name = "dataNascimento_Pessoa")
     private LocalDate dataNascimentoPessoa;
 
+    @Id
     @Column(name = "cpf_Pessoa")
-    private long cpf;
+    private Long cpf;
 
     @Column(name = "rendaFamiliarBruta_Pessoa")
     private BigDecimal rendaFamiliarBruta;
@@ -31,7 +28,9 @@ public class Pessoa {
     @Column(name = "qtdDependentes_Pessoa")
     private int qtdDependentes;
 
-    // Getters e Setters
+    @Column(name = "senha_Pessoa")
+    private String senha;
+
     public long getCpf() {
         return cpf;
     }
@@ -72,11 +71,11 @@ public class Pessoa {
         this.nomePessoa = nomePessoa;
     }
 
-    public int getId() {
-        return id;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
