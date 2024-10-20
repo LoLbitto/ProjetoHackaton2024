@@ -2,7 +2,6 @@ import { useState } from "react";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import { useRouter } from "next/router";
-import { ArrowLeftIcon } from "@heroicons/react/solid";
 
 const Cadastro = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +12,7 @@ const Cadastro = () => {
     qtdDependentes: "",
     senha: "",
     confirmarSenha: "",
+    creditos: "",
   });
 
   const [erros, setErros] = useState({});
@@ -23,12 +23,12 @@ const Cadastro = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
 
-    if (name === "cpf" || name === "senha" || name === "confirmarSenha") {
+    if (["cpf", "senha", "confirmarSenha"].includes(name)) {
       setErros((prevErros) => ({
         ...prevErros,
         [name]: undefined,
@@ -45,6 +45,22 @@ const Cadastro = () => {
     const senhaRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return senhaRegex.test(senha);
+  };
+
+  const calcularPontos = (rendimentoBruto, dependentes) => {
+    console.log(rendimentoBruto, dependentes);
+
+    const qntPessoas = +dependentes + 1;
+    console.log(qntPessoas);
+    const salarioPorCabeca = +rendimentoBruto / qntPessoas;
+    console.log(salarioPorCabeca);
+
+
+    let pontos = 500 / (salarioPorCabeca / 100);
+    pontos = pontos.toFixed(2);
+    console.log(`Pontos: ${pontos}`);
+
+    return qntPessoas === 1 ? pontos : pontos * (1 + ((qntPessoas) / 5))
   };
 
   const handleSubmit = async (e) => {
@@ -74,6 +90,10 @@ const Cadastro = () => {
           rendaFamiliarBruta: parseFloat(formData.rendaFamiliarBruta),
           qtdDependentes: parseInt(formData.qtdDependentes, 10),
           senha: formData.senha,
+          creditos: calcularPontos(
+            formData.rendaFamiliarBruta,
+            formData.qtdDependentes
+          ),
         };
 
         const response = await fetch("/api/cadastro", {
@@ -133,6 +153,7 @@ const Cadastro = () => {
       <Header />
       <div className="flex justify-center items-center flex-grow">
         <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
+          <h1 className="text-4xl font-bold mb-6 text-center">Cadastro</h1>
           {mensagemSucesso && (
             <div
               className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
@@ -153,13 +174,10 @@ const Cadastro = () => {
           >
             {etapa === 1 && (
               <>
-                <div className="flex items-center justify-center mb-6">
-                  <h1 className="text-4xl font-bold">Cadastro</h1>
-                </div>
                 <div className="form-group">
                   <label
                     htmlFor="nomePessoa"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Nome:
                   </label>
@@ -182,7 +200,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="dataNascimentoPessoa"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Data de Nascimento:
                   </label>
@@ -205,7 +223,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="cpf"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     CPF:
                   </label>
@@ -235,22 +253,10 @@ const Cadastro = () => {
 
             {etapa === 2 && (
               <>
-                <div className="flex items-center mb-6 justify-between">
-                  <button
-                    type="button"
-                    onClick={handlePreviousStep}
-                    className="text-lg text-black mr-0"
-                  >
-                    <ArrowLeftIcon className="h-6 w-6" />
-                  </button>
-                  <div className="flex-1 text-center ml-0">
-                    <h1 className="text-4xl font-bold">Cadastro</h1>
-                  </div>
-                </div>
                 <div className="form-group">
                   <label
                     htmlFor="rendaFamiliarBruta"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Renda Familiar Bruta:
                   </label>
@@ -261,7 +267,6 @@ const Cadastro = () => {
                     value={formData.rendaFamiliarBruta}
                     onChange={handleChange}
                     required
-                    step="0.01"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -269,7 +274,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="qtdDependentes"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Quantidade de Dependentes:
                   </label>
@@ -287,7 +292,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="senha"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Senha:
                   </label>
@@ -308,7 +313,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="confirmarSenha"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Confirmar Senha:
                   </label>
@@ -328,18 +333,46 @@ const Cadastro = () => {
                   )}
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full bg-[#80a15c] text-lg text-white py-2 px-4 rounded hover:bg-[#6c8a4c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Finalizar Cadastro
-                </button>
+                <div className="flex justify-between gap-x-1">
+                  <button
+                    type="button"
+                    onClick={handlePreviousStep}
+                    className="mt-4 w-full bg-gray-300 text-lg text-gray-800 py-2 px-4 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Voltar
+                  </button>
+
+                  <button
+                    type="submit"
+                    className="mt-4 w-full bg-[#80a15c] text-lg text-white py-2 px-4 rounded hover:bg-[#6c8a4c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Finalizar Cadastro
+                  </button>
+                </div>
               </>
             )}
           </form>
         </div>
       </div>
       <Footer />
+      <style jsx>{`
+        .loader {
+          border: 5px solid #f3f3f3;
+          border-top: 5px solid #3498db;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </div>
   );
 };

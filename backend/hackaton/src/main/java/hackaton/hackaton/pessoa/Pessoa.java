@@ -13,17 +13,6 @@ public class Pessoa {
     @Column(name = "nome_Pessoa")
     private String nomePessoa;
 
-<<<<<<< HEAD:backend/hackaton/src/main/java/hackaton.hackaton/pessoa/Pessoa.java
-    @Column(name = "nome_Pessoa")
-    private String nome_Pessoa;
-
-    @Column(name = "dataNascimento_Pessoa")
-    private LocalDate dataNascimento_Pessoa;
-
-    @Column(name = "cpf_Pessoa")
-    private long cpf;
-
-=======
     @Column(name = "dataNascimento_Pessoa")
     private LocalDate dataNascimentoPessoa;
 
@@ -31,7 +20,6 @@ public class Pessoa {
     @Column(name = "cpf_Pessoa")
     private Long cpf;
 
->>>>>>> 66066358a03961c086418c889995625af89abb57:backend/hackaton/src/main/java/hackaton/hackaton/pessoa/Pessoa.java
     @Column(name = "rendaFamiliarBruta_Pessoa")
     private BigDecimal rendaFamiliarBruta;
 

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import hackaton.hackaton.pessoa.Pessoa;
@@ -34,12 +33,6 @@ public class ControllerPrincipal {
         return ResponseEntity.ok(pessoa);
     }
 
-    @PostMapping(path = "/path")
-    public @ResponseBody
-    Iterable<Pessoa> getAllUsers() {
-        return pessoaR.findAll();
-    }
-
     public boolean isValidCPF(String cpf) {
         return cpf.matches("\\d{11}");
     }
@@ -60,30 +53,19 @@ public class ControllerPrincipal {
         }
     }
 
-@PutMapping("/pessoa/{cpf}")
-public Pessoa replaceEmployee(@RequestBody Pessoa novaPessoa, @PathVariable Long cpf) {
-    return pessoaR.findById(cpf).map(pessoa -> {
-        pessoa.setNomePessoa(novaPessoa.getNomePessoa());
-        pessoa.setDataNascimentoPessoa(novaPessoa.getDataNascimentoPessoa());
-        pessoa.setRendaFamiliarBruta(novaPessoa.getRendaFamiliarBruta());
-        pessoa.setQtdDependentes(novaPessoa.getQtdDependentes());
+    @PutMapping("/pessoa/{cpf}")
+    public Pessoa replaceUser(@RequestBody Pessoa novaPessoa, @PathVariable Long cpf) {
+        return pessoaR.findById(cpf).map(pessoa -> {
+            pessoa.setNomePessoa(novaPessoa.getNomePessoa());
+            pessoa.setDataNascimentoPessoa(novaPessoa.getDataNascimentoPessoa());
+            pessoa.setRendaFamiliarBruta(novaPessoa.getRendaFamiliarBruta());
+            pessoa.setQtdDependentes(novaPessoa.getQtdDependentes());
 
-        return pessoaR.save(pessoa);
-    }).orElseGet(() -> {
-        novaPessoa.setCpf(cpf);
-        return pessoaR.save(novaPessoa);
-    });
-}
-
-/** 
-    @DeleteMapping("/path/{cpf}")
-    void deleteEmployee(@PathVariable Long cpf) {
-        pessoaR.deleteById(cpf);
-<<<<<<< HEAD:backend/hackaton/src/main/java/hackaton.hackaton/ControllerPrincipal.java
-    } **/
-
-=======
+            return pessoaR.save(pessoa);
+        }).orElseGet(() -> {
+            novaPessoa.setCpf(cpf);
+            return pessoaR.save(novaPessoa);
+        });
     }
- */
->>>>>>> 66066358a03961c086418c889995625af89abb57:backend/hackaton/src/main/java/hackaton/hackaton/ControllerPrincipal.java
+
 }

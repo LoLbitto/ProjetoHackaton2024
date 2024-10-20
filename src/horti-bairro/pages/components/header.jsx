@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { UserCircleIcon } from "@heroicons/react/solid";
-import { HomeIcon } from "@heroicons/react/solid";
+import { UserCircleIcon, HomeIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 import HamburgerMenu from "./HamburgerMenu";
 import { useRouter } from "next/router";
@@ -54,15 +53,18 @@ const Header = () => {
             </li>
           )}
           {usuario && (
-            <div className="relative">
+            <div className="relative flex items-center">
               <button
                 onClick={() => setIsOpenUser(!isOpenUser)}
-                className="flex items-center text-[#336938] text-lg font-bold p-2 rounded-lg hover:bg-[#80a15c]"
+                className="flex items-center text-[#336938] text-lg font-bold p-2 rounded-lg hover:bg-[#80a15c] mr-2"
               >
                 {usuario.nomePessoa} <UserCircleIcon className="h-6 w-6 ml-2" />
               </button>
+              <span className="text-[#336938] text-lg font-bold hover:bg-[#80a15c] duration-200 p-2 rounded-lg">
+                Créditos: {usuario.creditos}
+              </span>
               {isOpenUser && (
-                <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg">
+                <div className="absolute right-0 top-[40px] w-40 bg-white shadow-lg rounded-lg transform translate-x-[-50%]">
                   <ul className="flex flex-col p-4 space-y-2">
                     <li>
                       <button
@@ -85,11 +87,10 @@ const Header = () => {
               )}
             </div>
           )}
-
           {router.pathname !== "/" && (
             <li>
               <Link href="/">
-                <span className="flex items-center text-[#336938] text-lg font-bold hover:bg-[#80a15c] duration-200 p-2 rounded-lg">
+                <span className="flex items-center text-[#336938] text-lg font-bold hover:bg-[#80a15c] duration-200 p-2 rounded-lg ml-4">
                   HOME <HomeIcon className="h-6 w-6 ml-2" />
                 </span>
               </Link>

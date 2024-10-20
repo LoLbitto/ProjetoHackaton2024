@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 
 const Perfil = () => {
   const [usuario, setUsuario] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditando, setIsEditando] = useState(false);
+  const [isCreditos, setIsCreditos] = useState(false);
   const [nome, setNome] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [cpf, setCpf] = useState("");
@@ -29,11 +30,19 @@ const Perfil = () => {
     }
   }, [router]);
 
-  const handleEdit = () => {
-    setIsEditing(!isEditing);
+  const handleEditar = () => {
+    setIsEditando(!isEditando);
   };
 
-  const handleSave = async () => {
+  const handleCreditos = () => {
+    setIsCreditos(true);
+  };
+
+  const handleVoltar = () => {
+    setIsCreditos(false);
+  };
+
+  const handleSalvar = async () => {
     const dadosAtualizados = {
       ...usuario,
       nomePessoa: nome,
@@ -73,7 +82,7 @@ const Perfil = () => {
 
     localStorage.setItem("usuario", JSON.stringify(dadosAtualizados));
     setUsuario(dadosAtualizados);
-    setIsEditing(false);
+    setIsEditando(false);
   };
 
   if (!usuario) {
@@ -96,95 +105,130 @@ const Perfil = () => {
             </div>
           )}
           <div className="space-y-4">
-            <div className="form-group">
-              <label className="block text-sm font-medium text-gray-700">
-                Nome:
-              </label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                  className="mt-1 p-2 border border-gray-300 rounded"
-                />
-              ) : (
-                <p className="mt-1 text-lg">{usuario.nomePessoa}</p>
-              )}
-            </div>
-            <div className="form-group">
-              <label className="block text-sm font-medium text-gray-700">
-                Data de Nascimento:
-              </label>
-              {isEditing ? (
-                <input
-                  type="date"
-                  value={dataNascimento}
-                  onChange={(e) => setDataNascimento(e.target.value)}
-                  className="mt-1 p-2 border border-gray-300 rounded"
-                />
-              ) : (
-                <p className="mt-1 text-lg">{usuario.dataNascimentoPessoa}</p>
-              )}
-            </div>
-            <div className="form-group">
-              <label className="block text-sm font-medium text-gray-700">
-                CPF:
-              </label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={cpf}
-                  onChange={(e) => setCpf(e.target.value)}
-                  className="mt-1 p-2 border border-gray-300 rounded"
-                />
-              ) : (
-                <p className="mt-1 text-lg">{usuario.cpf}</p>
-              )}
-            </div>
-            <div className="form-group">
-              <label className="block text-sm font-medium text-gray-700">
-                Renda Familiar Bruta:
-              </label>
-              {isEditing ? (
-                <input
-                  type="number"
-                  value={rendaFamiliarBruta}
-                  onChange={(e) =>
-                    setRendaFamiliarBruta(Number(e.target.value))
-                  }
-                  className="mt-1 p-2 border border-gray-300 rounded"
-                />
-              ) : (
-                <p className="mt-1 text-lg">
-                  {usuario.rendaFamiliarBruta.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
-                </p>
-              )}
-            </div>
-            <div className="form-group">
-              <label className="block text-sm font-medium text-gray-700">
-                Quantidade de Dependentes:
-              </label>
-              {isEditing ? (
-                <input
-                  type="number"
-                  value={qtdDependentes}
-                  onChange={(e) => setQtdDependentes(Number(e.target.value))}
-                  className="mt-1 p-2 border border-gray-300 rounded"
-                />
-              ) : (
-                <p className="mt-1 text-lg">{usuario.qtdDependentes}</p>
-              )}
-            </div>
+            {isCreditos ? (
+              <div>
+                <h2 className="text-xl font-semibold mb-4">
+                  Informações sobre os Créditos
+                </h2>
+                <p>Valor mensal: {usuario.creditos}</p>
+                <p>placeholder</p>
+                <p>placeholder</p>
+                <button
+                  onClick={handleVoltar}
+                  className="mt-4 w-full bg-[#f56565] hover:bg-[#e53e3e] text-white py-2 rounded"
+                >
+                  Voltar
+                </button>
+              </div>
+            ) : (
+              <div>
+                <div className="form-group">
+                  <label className="block text-lg font-medium text-gray-700">
+                    Nome:
+                  </label>
+                  {isEditando ? (
+                    <input
+                      type="text"
+                      value={nome}
+                      onChange={(e) => setNome(e.target.value)}
+                      className="mt-1 p-2 border border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="mt-1 text-lg">{usuario.nomePessoa}</p>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label className="block text-lg font-medium text-gray-700">
+                    Data de Nascimento:
+                  </label>
+                  {isEditando ? (
+                    <input
+                      type="date"
+                      value={dataNascimento}
+                      onChange={(e) => setDataNascimento(e.target.value)}
+                      className="mt-1 p-2 border border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="mt-1 text-lg">
+                      {usuario.dataNascimentoPessoa}
+                    </p>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label className="block text-lg font-medium text-gray-700">
+                    CPF:
+                  </label>
+                  {isEditando ? (
+                    <input
+                      type="text"
+                      value={cpf}
+                      onChange={(e) => setCpf(e.target.value)}
+                      className="mt-1 p-2 border border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="mt-1 text-lg">{usuario.cpf}</p>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label className="block text-lg font-medium text-gray-700">
+                    Renda Familiar Bruta:
+                  </label>
+                  {isEditando ? (
+                    <input
+                      type="number"
+                      value={rendaFamiliarBruta}
+                      onChange={(e) =>
+                        setRendaFamiliarBruta(Number(e.target.value))
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="mt-1 text-lg">
+                      {usuario.rendaFamiliarBruta.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })}
+                    </p>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label className="block text-lg font-medium text-gray-700">
+                    Quantidade de Dependentes:
+                  </label>
+                  {isEditando ? (
+                    <input
+                      type="number"
+                      value={qtdDependentes}
+                      onChange={(e) =>
+                        setQtdDependentes(Number(e.target.value))
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="mt-1 text-lg">{usuario.qtdDependentes}</p>
+                  )}
+                </div>
+                <div className="form-group">
+                  <button
+                    onClick={handleCreditos}
+                    className="mt-4 text-sm w-full bg-[#e3e3e3] hover:bg-[#d1d1d1] p-2 text-gray-700 rounded text-left"
+                  >
+                    <label className="block text-lg font-medium text-gray-700">
+                      Créditos
+                    </label>
+
+                    <p className="mt-1 text-lg">{usuario.creditos}</p>
+                  </button>
+                </div>
+                <button
+                  onClick={isEditando ? handleSalvar : handleEditar}
+                  className="mt-4 w-full bg-[#80a15c] hover:bg-[#6c8a4c] text-white py-2 rounded"
+                >
+                  {isEditando ? "Salvar" : "Editar"}
+                </button>
+              </div>
+            )}
           </div>
-          <button
-            onClick={isEditing ? handleSave : handleEdit}
-            className="mt-4 w-full bg-[#80a15c] hover:bg-[#6c8a4c] text-white py-2 rounded"
-          >
-            {isEditing ? "Salvar" : "Editar"}
-          </button>
         </div>
       </div>
       <Footer />
