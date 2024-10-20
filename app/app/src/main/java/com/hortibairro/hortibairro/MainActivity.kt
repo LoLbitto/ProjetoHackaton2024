@@ -19,13 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
+import android.content.Intent
+
 import androidx.compose.ui.tooling.preview.Preview
 import com.hortibairro.hortibairro.ui.theme.HortibairroTheme
 
-val items = listOf("barra","user", "creditos")
-
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -69,19 +70,15 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Botao() {
-	var clicado: Boolean = false;
 	Button(
-	    onClick = {clicado = true}
+	    onClick = {
+		val intent = Intent(this@MainActivity, ScannerActivity::class.java)
+		startActivity(intent)
+	    }
 	) {
 	    Text(
 		text = "botão"
 	    )
-	    
-	    if (clicado) {
-		Text(
-		    text = "o botão foi clicado"
-		)
-	    }
 	}
     }
 }

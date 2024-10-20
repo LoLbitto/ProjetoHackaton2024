@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">hortibairro</string>
+  <string name="app_name">horti-bairro</string>
+  <string name="ler_qr">Ler</string>
 </resources>
