@@ -7,7 +7,7 @@ const Info = () => {
             HORTI-BAIRRO
           </h1>
 
-          <h2 className="text-4xl mb-4">
+          <h2 className="text-3xl lg:text-4lg mb-4">
             AGRICULTURA FAMILIAR É A SAÍDA PARA A FOME!
           </h2>
           <p className="text-lg">CADASTRE-SE PARA RECEBER BENEFÍCIOS</p>

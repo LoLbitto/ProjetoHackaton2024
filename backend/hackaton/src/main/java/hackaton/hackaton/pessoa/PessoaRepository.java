@@ -1,4 +1,4 @@
-package pessoa;
+package hackaton.hackaton.pessoa;
 
 import org.springframework.data.repository.CrudRepository;
 
