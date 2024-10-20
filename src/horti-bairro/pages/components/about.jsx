@@ -4,12 +4,9 @@ const About = () => {
       <h2 className="text-3xl font-bold mb-4">Sobre Nós</h2>
       <p className="text-lg text-gray-700">
         {" "}
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus a
-        dignissim mauris. Sed nec ex nulla. Nam elementum non magna non gravida.
-        Duis in erat vel diam pretium mattis non eu nisl. In semper sollicitudin
-        tortor eu rhoncus. Etiam dignissim quis ipsum et sollicitudin. Nunc
-        molestie in lorem eu fermentum. Integer ullamcorper risus tortor, eget
-        maximus erat malesuada nec.{" "}
+        Horti-bairro é uma instituição criada pelo governo municipal que visa a
+        distribuição de alimentos saudáveis à famílias de baixa renda, visamos
+        reduzir a fome na cidade e melhorar a saúde de nossos habitantes.{" "}
       </p>
     </section>
   );

@@ -3,7 +3,6 @@ package hackaton.hackaton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,51 +24,66 @@ public class ControllerPrincipal {
 
     @GetMapping("/")
     public String testeApi() {
-        return "fdkfsd";
+        return "API funcionando";
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/cadastro")
-    public @ResponseBody
-    String addNewUser(@RequestBody Pessoa pessoa) {
-
+    public ResponseEntity<Pessoa> addNewUser(@RequestBody Pessoa pessoa) {
         pessoaR.save(pessoa);
-
-        return "Salvo";
+        return ResponseEntity.ok(pessoa);
     }
 
-    /**@PostMapping(path = "/path")
+    @PostMapping(path = "/path")
     public @ResponseBody
     Iterable<Pessoa> getAllUsers() {
         return pessoaR.findAll();
     }
 
-    @GetMapping("/path/{cpf}")
+    public boolean isValidCPF(String cpf) {
+        return cpf.matches("\\d{11}");
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/login/{cpf}")
     public ResponseEntity<Pessoa> one(@PathVariable Long cpf) {
-        return pessoaR.findById(cpf).map(pessoa -> ResponseEntity.ok().body(pessoa))
-                .orElse(ResponseEntity.notFound().build());
+        System.out.println("CPF recebido: " + cpf);
+
+        try {
+            System.out.println("CPF convertido: " + cpf);
+
+            return pessoaR.findById(cpf)
+                    .map(pessoa -> ResponseEntity.ok().body(pessoa))
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
-    @PutMapping("/path/{cpf}")
-    Pessoa replaceEmployee(@RequestBody Pessoa novaPessoa, @PathVariable Long cpf) {
+@PutMapping("/pessoa/{cpf}")
+public Pessoa replaceEmployee(@RequestBody Pessoa novaPessoa, @PathVariable Long cpf) {
+    return pessoaR.findById(cpf).map(pessoa -> {
+        pessoa.setNomePessoa(novaPessoa.getNomePessoa());
+        pessoa.setDataNascimentoPessoa(novaPessoa.getDataNascimentoPessoa());
+        pessoa.setRendaFamiliarBruta(novaPessoa.getRendaFamiliarBruta());
+        pessoa.setQtdDependentes(novaPessoa.getQtdDependentes());
 
-        return pessoaR.findById(cpf).map(pessoa -> {
-            pessoa.setNome(novaPessoa.getNome());
-            pessoa.setCpf(novaPessoa.getCpf());
-            pessoa.setRg(novaPessoa.getRg());
-            pessoa.setDataNascimento(novaPessoa.getDataNascimento());
-            pessoa.setRendaFamiliarBruta(novaPessoa.getRendaFamiliarBruta());
-            pessoa.setQtdDependentes(novaPessoa.getQtdDependentes());
+        return pessoaR.save(pessoa);
+    }).orElseGet(() -> {
+        novaPessoa.setCpf(cpf);
+        return pessoaR.save(novaPessoa);
+    });
+}
 
-            return pessoaR.save(pessoa);
-        }).orElseGet(() -> {
-            return pessoaR.save(novaPessoa);
-        });
-    }
-
+/** 
     @DeleteMapping("/path/{cpf}")
     void deleteEmployee(@PathVariable Long cpf) {
         pessoaR.deleteById(cpf);
+<<<<<<< HEAD:backend/hackaton/src/main/java/hackaton.hackaton/ControllerPrincipal.java
     } **/
 
+=======
+    }
+ */
+>>>>>>> 66066358a03961c086418c889995625af89abb57:backend/hackaton/src/main/java/hackaton/hackaton/ControllerPrincipal.java
 }

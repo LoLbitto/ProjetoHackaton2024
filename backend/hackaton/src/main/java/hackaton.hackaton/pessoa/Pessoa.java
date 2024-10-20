@@ -5,17 +5,15 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity(name = "tbPessoa")
 public class Pessoa {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+    @Column(name = "nome_Pessoa")
+    private String nomePessoa;
 
+<<<<<<< HEAD:backend/hackaton/src/main/java/hackaton.hackaton/pessoa/Pessoa.java
     @Column(name = "nome_Pessoa")
     private String nome_Pessoa;
 
@@ -25,11 +23,26 @@ public class Pessoa {
     @Column(name = "cpf_Pessoa")
     private long cpf;
 
+=======
+    @Column(name = "dataNascimento_Pessoa")
+    private LocalDate dataNascimentoPessoa;
+
+    @Id
+    @Column(name = "cpf_Pessoa")
+    private Long cpf;
+
+>>>>>>> 66066358a03961c086418c889995625af89abb57:backend/hackaton/src/main/java/hackaton/hackaton/pessoa/Pessoa.java
     @Column(name = "rendaFamiliarBruta_Pessoa")
     private BigDecimal rendaFamiliarBruta;
 
     @Column(name = "qtdDependentes_Pessoa")
     private int qtdDependentes;
+
+    @Column(name = "senha_Pessoa")
+    private String senha;
+
+    @Column(name="creditos_Pessoa")
+    private double creditos;
 
     public long getCpf() {
         return cpf;
@@ -55,28 +68,35 @@ public class Pessoa {
         this.qtdDependentes = qtdDependentes;
     }
 
-    public LocalDate getDataNascimento_Pessoa() {
-        return dataNascimento_Pessoa;
+    public LocalDate getDataNascimentoPessoa() {
+        return dataNascimentoPessoa;
     }
 
-    public void setDataNascimento_Pessoa(LocalDate dataNascimento_Pessoa) {
-        this.dataNascimento_Pessoa = dataNascimento_Pessoa;
+    public void setDataNascimentoPessoa(LocalDate dataNascimentoPessoa) {
+        this.dataNascimentoPessoa = dataNascimentoPessoa;
     }
 
-    public String getNome_Pessoa() {
-        return nome_Pessoa;
+    public String getNomePessoa() {
+        return nomePessoa;
     }
 
-    public void setNome_Pessoa(String nome_Pessoa) {
-        this.nome_Pessoa = nome_Pessoa;
+    public void setNomePessoa(String nomePessoa) {
+        this.nomePessoa = nomePessoa;
     }
 
-    public int getId() {
-        return id;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
+    public double getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(double creditos) {
+        this.creditos = creditos;
+    }
 }
