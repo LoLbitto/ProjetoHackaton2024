@@ -1,4 +1,5 @@
 <resources>
   <string name="app_name">horti-bairro</string>
   <string name="ler_qr">Ler</string>
+  <string name = "description">Horti-bairro é uma instituição criada pelo governo municipal que visa a distribuição de alimentos saudáveis à famílias de baixa renda, visamos reduzir a fome na cidade e melhorar a saúde de nossos habitantes.O projeto consiste em uma loja de horti-fruti com uma horta comunitária, mas fazendeiros locais também serão apoiados com seus produtos sendo disponibilizados na loja. A venda é feita de forma autônoma por qr code nos caixas por modelo self-service.</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.hortibairro.hortibairro.ui.theme
 
+import androidx.compose.ui.graphics.Color
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,16 +13,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Color(97, 173, 127),
+    secondary = Color(238, 230, 217),
+    tertiary = Pink80,
+    background = Color(238, 230, 217)
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = Color(97, 173, 127),
     secondary = PurpleGrey40,
-    tertiary = Pink40
-
+    tertiary = Pink40,
+    background = Color(238, 230, 217)
+    
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),

@@ -73,7 +73,8 @@ class ScannerActivity : ComponentActivity() {
     }
 
     private fun lerQr() {
-	
+	val intent = Intent(this@ScannerActivity, PagamentoActivity::class.java)
+	startActivity(intent)
     }
 
     private val activityResultLauncher =

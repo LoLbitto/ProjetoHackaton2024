@@ -1,5 +1,7 @@
 package com.hortibairro.hortibairro
 
+import com.hortibairro.hortibairro.PagamentoActivity
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,33 +22,39 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
 import android.content.Intent
-
+import androidx.compose.ui.text.style.TextAlign
+import com.hortibairro.hortibairro.ScannerActivity
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import com.hortibairro.hortibairro.ui.theme.HortibairroTheme
+import android.util.TypedValue
+import android.content.Context
+import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.ImageButton
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            HortibairroTheme {
+	    HortibairroTheme {
                 Surface(
 		    modifier = Modifier.fillMaxSize(),
-		    color = MaterialTheme.colorScheme.background
+		    color = Color(238, 230, 217) //a - 10, b - 11, c - 12, d - 13, e - 14, f - 15
 		) {
 		    Scaffold (
 			topBar = {
 			    TopAppBar(
 				colors = TopAppBarDefaults.topAppBarColors(
-				    containerColor = Color.Green,
-				    titleContentColor = MaterialTheme.colorScheme.primary,
+				    containerColor = Color(5, 5, 5),
+				    titleContentColor = Color.White,
 				),
-				title = {
-				    Text("teste de barra superior")
-				    
-				}
+				
+				title = {Text("Horti-Bairro")} 
+				
 			    )
 			}
 		    ) {
@@ -54,31 +62,32 @@ class MainActivity : ComponentActivity() {
 			    Column(
 				modifier = Modifier.padding(paddingValues),
 				verticalArrangement = Arrangement.spacedBy(16.dp),
+				horizontalAlignment = Alignment.CenterHorizontally
 			    ) {
 				Text(
-				    text = "Meu deus finalmente foi"
+				    text = "Quem somos?",
+				    color = Color.Black,
+				    textAlign = TextAlign.Center,
+				    modifier = Modifier.padding(top = 20.dp)
 				)
-				Botao()
-				
+				Text(
+				    text = stringResource(id = R.string.description),
+				    color = Color(97, 173, 127),
+				    textAlign = TextAlign.Center,
+				    modifier = Modifier.padding(start = 4.dp, end = 4.dp)
+				)
+				Button(
+				    onClick = {
+					val intent = Intent(this@MainActivity, ScannerActivity::class.java)
+					startActivity(intent)
+				    }
+				){
+				    Text( text = "Pagar", color = Color.White)
+				}
 			    }
 		    }  
 		}
-            }
-	    
-        }
-    }
-
-    @Composable
-    fun Botao() {
-	Button(
-	    onClick = {
-		val intent = Intent(this@MainActivity, ScannerActivity::class.java)
-		startActivity(intent)
 	    }
-	) {
-	    Text(
-		text = "botão"
-	    )
 	}
     }
 }

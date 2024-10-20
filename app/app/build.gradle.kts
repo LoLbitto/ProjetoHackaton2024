@@ -77,6 +77,7 @@ android {
 
 dependencies {
 
+    implementation ("androidx.appcompat:appcompat:1.6.0")
     implementation(platform("androidx.compose:compose-bom:2023.10.00"))
 
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
