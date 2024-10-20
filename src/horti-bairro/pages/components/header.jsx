@@ -72,6 +72,14 @@ const Header = () => {
                         Sair
                       </button>
                     </li>
+                    <li>
+                      <Link
+                        href="/perfil"
+                        className="block text-gray-800 hover:bg-[#e0ddd7] p-2 rounded duration-200"
+                      >
+                        Perfil
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               )}
@@ -107,22 +115,6 @@ const Header = () => {
                 className="block text-gray-800 hover:bg-[#e0ddd7] p-2 rounded duration-200"
               >
                 Sobre
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#"
-                className="block text-gray-800 hover:bg-[#e0ddd7] p-2 rounded duration-200"
-              >
-                Serviços
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#"
-                className="block text-gray-800 hover:bg-[#e0ddd7] p-2 rounded duration-200"
-              >
-                Contato
               </Link>
             </li>
           </ul>

@@ -3,8 +3,6 @@ package hackaton.hackaton.pessoa;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.sun.source.tree.LabeledStatementTree;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -30,6 +28,9 @@ public class Pessoa {
 
     @Column(name = "senha_Pessoa")
     private String senha;
+
+    @Column(name="creditos_Pessoa")
+    private double creditos;
 
     public long getCpf() {
         return cpf;
@@ -77,5 +78,13 @@ public class Pessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public double getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(double creditos) {
+        this.creditos = creditos;
     }
 }

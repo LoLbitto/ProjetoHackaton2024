@@ -67,7 +67,7 @@ const Login = () => {
           setTimeout(() => {
             localStorage.setItem(
               "usuario",
-              JSON.stringify({ nomePessoa: data.nomePessoa })
+              JSON.stringify(data)
             );
             router.push("/");
           }, 3000);
