@@ -16,19 +16,19 @@ public class Pessoa {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-    @Column(name = "nomePessoa")
+    @Column(name = "nome_Pessoa")
     private String nome_Pessoa;
 
-    @Column(name = "datanascimentoPessoa")
+    @Column(name = "dataNascimento_Pessoa")
     private LocalDate dataNascimento_Pessoa;
 
-    @Column(name = "cpfPessoa")
+    @Column(name = "cpf_Pessoa")
     private long cpf;
 
-    @Column(name = "rendafamiliarbrutaPessoa")
+    @Column(name = "rendaFamiliarBruta_Pessoa")
     private BigDecimal rendaFamiliarBruta;
 
-    @Column(name = "qtddependentesPessoa")
+    @Column(name = "qtdDependentes_Pessoa")
     private int qtdDependentes;
 
     public long getCpf() {

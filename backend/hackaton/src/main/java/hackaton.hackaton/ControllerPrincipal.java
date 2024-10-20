@@ -70,6 +70,6 @@ public class ControllerPrincipal {
     @DeleteMapping("/path/{cpf}")
     void deleteEmployee(@PathVariable Long cpf) {
         pessoaR.deleteById(cpf);
-    }
+    } **/
 
-}**/    
+}
