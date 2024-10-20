@@ -65,10 +65,7 @@ const Login = () => {
           setIsLoading(true);
 
           setTimeout(() => {
-            localStorage.setItem(
-              "usuario",
-              JSON.stringify({ nomePessoa: data.nomePessoa })
-            );
+            localStorage.setItem("usuario", JSON.stringify(data));
             router.push("/");
           }, 3000);
         } else {
@@ -86,6 +83,9 @@ const Login = () => {
   return (
     <div className="flex flex-col min-h-[130vh]">
       <Header />
+      <div className="flex items-center justify-center mb-6">
+        <h1 className="text-4xl font-bold">Login</h1>
+      </div>
       <div className="flex justify-center items-center flex-grow">
         <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
           <h1 className="text-4xl font-bold mb-6 text-center">Login</h1>
@@ -110,7 +110,7 @@ const Login = () => {
             <div className="form-group">
               <label
                 htmlFor="cpf"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-lg font-medium text-gray-700"
               >
                 CPF:
               </label>
@@ -131,7 +131,7 @@ const Login = () => {
             <div className="form-group">
               <label
                 htmlFor="senha"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-lg font-medium text-gray-700"
               >
                 Senha:
               </label>

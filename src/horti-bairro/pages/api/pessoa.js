@@ -4,11 +4,12 @@ export default async function handler(req, res) {
             const { cpf } = req.body;
             console.log(cpf);
 
-            const response = await fetch(`http://localhost:8080/api/login/${cpf}`, {
-                method: "POST",
+            const response = await fetch(`http://localhost:8080/api/pessoa/${cpf}`, {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
+                body: JSON.stringify(req.body), // Corpo da requisição com os dados atualizados
             });
 
             if (!response.ok) {

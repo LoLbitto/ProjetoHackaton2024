@@ -12,6 +12,7 @@ const Cadastro = () => {
     qtdDependentes: "",
     senha: "",
     confirmarSenha: "",
+    creditos: "",
   });
 
   const [erros, setErros] = useState({});
@@ -22,12 +23,12 @@ const Cadastro = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
 
-    if (name === "cpf" || name === "senha" || name === "confirmarSenha") {
+    if (["cpf", "senha", "confirmarSenha"].includes(name)) {
       setErros((prevErros) => ({
         ...prevErros,
         [name]: undefined,
@@ -44,6 +45,22 @@ const Cadastro = () => {
     const senhaRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return senhaRegex.test(senha);
+  };
+
+  const calcularPontos = (rendimentoBruto, dependentes) => {
+    console.log(rendimentoBruto, dependentes);
+
+    const qntPessoas = +dependentes + 1;
+    console.log(qntPessoas);
+    const salarioPorCabeca = +rendimentoBruto / qntPessoas;
+    console.log(salarioPorCabeca);
+
+
+    let pontos = 500 / (salarioPorCabeca / 100);
+    pontos = pontos.toFixed(2);
+    console.log(`Pontos: ${pontos}`);
+
+    return qntPessoas === 1 ? pontos : pontos * (1 + ((qntPessoas) / 5))
   };
 
   const handleSubmit = async (e) => {
@@ -63,15 +80,20 @@ const Cadastro = () => {
     }
 
     setErros(novosErros);
-    console.log(novosErros);
 
     if (Object.keys(novosErros).length === 0) {
       try {
         const dadosFormatados = {
-          ...formData,
+          nomePessoa: formData.nomePessoa,
+          dataNascimentoPessoa: formData.dataNascimentoPessoa,
           cpf: parseInt(formData.cpf, 10),
           rendaFamiliarBruta: parseFloat(formData.rendaFamiliarBruta),
           qtdDependentes: parseInt(formData.qtdDependentes, 10),
+          senha: formData.senha,
+          creditos: calcularPontos(
+            formData.rendaFamiliarBruta,
+            formData.qtdDependentes
+          ),
         };
 
         const response = await fetch("/api/cadastro", {
@@ -90,10 +112,7 @@ const Cadastro = () => {
           setIsLoading(true);
 
           setTimeout(() => {
-            localStorage.setItem(
-              "usuario",
-              JSON.stringify({ nomePessoa: formData.nomePessoa })
-            );
+            localStorage.setItem("usuario", JSON.stringify(dadosFormatados));
             router.push("/");
           }, 3000);
         } else {
@@ -125,6 +144,10 @@ const Cadastro = () => {
     }
   };
 
+  const handlePreviousStep = () => {
+    setEtapa(1);
+  };
+
   return (
     <div className="flex flex-col min-h-[130vh]">
       <Header />
@@ -154,7 +177,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="nomePessoa"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Nome:
                   </label>
@@ -177,7 +200,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="dataNascimentoPessoa"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Data de Nascimento:
                   </label>
@@ -200,7 +223,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="cpf"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     CPF:
                   </label>
@@ -233,7 +256,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="rendaFamiliarBruta"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Renda Familiar Bruta:
                   </label>
@@ -244,7 +267,6 @@ const Cadastro = () => {
                     value={formData.rendaFamiliarBruta}
                     onChange={handleChange}
                     required
-                    step="0.01"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -252,7 +274,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="qtdDependentes"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Quantidade de Dependentes:
                   </label>
@@ -270,7 +292,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="senha"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Senha:
                   </label>
@@ -291,7 +313,7 @@ const Cadastro = () => {
                 <div className="form-group">
                   <label
                     htmlFor="confirmarSenha"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
                     Confirmar Senha:
                   </label>
@@ -311,12 +333,22 @@ const Cadastro = () => {
                   )}
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full bg-[#80a15c] text-lg text-white py-2 px-4 rounded hover:bg-[#6c8a4c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Cadastrar
-                </button>
+                <div className="flex justify-between gap-x-1">
+                  <button
+                    type="button"
+                    onClick={handlePreviousStep}
+                    className="mt-4 w-full bg-gray-300 text-lg text-gray-800 py-2 px-4 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Voltar
+                  </button>
+
+                  <button
+                    type="submit"
+                    className="mt-4 w-full bg-[#80a15c] text-lg text-white py-2 px-4 rounded hover:bg-[#6c8a4c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Finalizar Cadastro
+                  </button>
+                </div>
               </>
             )}
           </form>
@@ -332,7 +364,6 @@ const Cadastro = () => {
           height: 30px;
           animation: spin 1s linear infinite;
         }
-
         @keyframes spin {
           0% {
             transform: rotate(0deg);
