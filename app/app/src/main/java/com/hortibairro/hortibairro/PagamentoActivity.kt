@@ -13,11 +13,26 @@ import androidx.compose.ui.text.style.TextAlign
 import android.os.Bundle
 import androidx.compose.ui.Modifier
 import android.content.Intent
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.request.*
+import io.ktor.http.*
+import io.ktor.client.call.*
+import kotlinx.coroutines.*
+import io.ktor.client.statement.HttpResponse
+import java.net.URL
+import android.net.Uri
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 class PagamentoActivity : ComponentActivity() {
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+	val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://192.168.18.8:5000/confirm?ispago=Sim"))
+        startActivity(intent)
+	
         setContent{
 	    HortibairroTheme{
 		Column(
@@ -30,7 +45,7 @@ class PagamentoActivity : ComponentActivity() {
 			//fontSize = 30.dp,
 			color = Color(97, 173, 127),
 			textAlign = TextAlign.Center
-		    )
+		    ) 
 
 		    Button( onClick = {
 				val intent = Intent(this@PagamentoActivity, MainActivity::class.java)
@@ -46,3 +61,4 @@ class PagamentoActivity : ComponentActivity() {
 	}
     }
 }
+

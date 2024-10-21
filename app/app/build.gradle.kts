@@ -80,6 +80,12 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.6.0")
     implementation(platform("androidx.compose:compose-bom:2023.10.00"))
 
+    implementation ("io.ktor:ktor-client-core:3.0.0")
+    implementation ("io.ktor:ktor-client-cio:3.0.0")
+    implementation ("io.ktor:ktor-client-android:3.0.0")
+    implementation ("io.ktor:ktor-client-serialization:3.0.0") // If you need serialization
+    implementation ("io.ktor:ktor-client-logging:3.0.0") 
+    
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     
     implementation ("androidx.compose.material:material:1.5.7")
